@@ -75,17 +75,19 @@ export default function DebugPanel({ qrData, attendeeData }: DebugPanelProps) {
         }]);
       }
       
+      if (attendeeData.phone) {
+        setLogs(prev => [...prev, { 
+          timestamp: new Date(), 
+          message: `Teléfono: ${attendeeData.phone}`, 
+          type: 'info' 
+        }]);
+      }
+      
       if (attendeeData.email) {
         setLogs(prev => [...prev, { 
           timestamp: new Date(), 
           message: `Email: ${attendeeData.email}`, 
           type: 'info' 
-        }]);
-      } else {
-        setLogs(prev => [...prev, { 
-          timestamp: new Date(), 
-          message: 'Advertencia: Email no disponible', 
-          type: 'warning' 
         }]);
       }
     } else if (qrData) {

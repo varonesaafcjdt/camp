@@ -14,6 +14,7 @@ interface AttendeeData {
   firstname?: string;
   lastname?: string;
   email?: string;
+  phone?: string;
   church?: string;
   sector?: string;
   paymentamount?: number;
@@ -143,6 +144,11 @@ export default function AttendeeInfo({ attendee, onConfirmAttendance }: Attendee
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div className="space-y-1 p-3 bg-slate-50 rounded-lg border border-slate-100">
+            <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest text-left">Teléfono</p>
+            <p className="text-sm font-bold text-slate-800 break-all text-left">{attendee.phone || 'No disponible'}</p>
+          </div>
+
           <div className="space-y-1 p-3 bg-slate-50 rounded-lg border border-slate-100">
             <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest text-left">Email</p>
             <p className="text-sm font-bold text-slate-800 break-all text-left">{attendee.email || 'No disponible'}</p>

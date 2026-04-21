@@ -24,7 +24,6 @@ export default function RegistroPresencial() {
   const [form, setForm] = useState({
     nombre: '',
     apellido: '',
-    email: '',
     iglesia: '',
     telefono: '',
     rol: ROLES[0].value,
@@ -102,7 +101,7 @@ export default function RegistroPresencial() {
   };
 
   const limpiarFormulario = () => {
-    setForm({ nombre: '', apellido: '', email: '', iglesia: '', telefono: '', rol: ROLES[0].value, notas: '' });
+    setForm({ nombre: '', apellido: '', iglesia: '', telefono: '', rol: ROLES[0].value, notas: '' });
     setMonto(ROLES[0].monto);
     setSector('');
     setNumeroCampista(null);
@@ -155,7 +154,7 @@ export default function RegistroPresencial() {
       const { data: insertData, error: insertError } = await supabase.from('attendees').insert({
         firstname: form.nombre,
         lastname: form.apellido,
-        email: form.email,
+        email: '', // Correo eliminado del formulario walk-in
         church: form.iglesia,
         sector: sector,
         phone: form.telefono,
@@ -227,14 +226,10 @@ export default function RegistroPresencial() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Correo electrónico <span className="text-red-600">*</span></label>
-                  <input name="email" type="email" value={form.email} onChange={handleChange} required className={inputClass + " border-slate-200 focus:border-red-600 focus:ring-red-600/10"} tabIndex={3} />
-                </div>
+              <div className="grid grid-cols-1 gap-6">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Teléfono <span className="text-red-600">*</span></label>
-                  <input name="telefono" type="tel" value={form.telefono} onChange={handleChange} required className={inputClass + " border-slate-200 focus:border-red-600 focus:ring-red-600/10"} tabIndex={4} maxLength={10} />
+                  <input name="telefono" type="tel" value={form.telefono} onChange={handleChange} required className={inputClass + " border-slate-200 focus:border-red-600 focus:ring-red-600/10"} tabIndex={3} maxLength={10} />
                 </div>
               </div>
 

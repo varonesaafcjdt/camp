@@ -47,7 +47,7 @@ export default function ManualIdInput({ onScanSimulation }: ManualIdInputProps) 
     const sampleJson = JSON.stringify({
       id: manualId,
       nombre: "Asistente Prueba",
-      email: "prueba@example.com",
+      telefono: "1234567890",
       iglesia: "Iglesia de Prueba",
       sector: "Sector 1",
       monto: 100,

@@ -29,6 +29,7 @@ interface AttendeeData {
   firstname: string;
   lastname: string;
   email: string;
+  phone: string;
   church: string;
   sector: string;
   paymentamount: number;
@@ -107,7 +108,7 @@ export default function ComitePage() {
       // Consultar la base de datos con el ID extraído
       const { data, error } = await supabase
         .from('attendees')
-        .select('id, firstname, lastname, email, church, sector, paymentamount, paymentstatus, created_at, attendance_number, attendance_confirmed, attendance_confirmed_at, tshirtsize')
+        .select('id, firstname, lastname, email, phone, church, sector, paymentamount, paymentstatus, created_at, attendance_number, attendance_confirmed, attendance_confirmed_at, tshirtsize')
         .eq('id', attendeeId)
         .single();
         
@@ -130,7 +131,7 @@ export default function ComitePage() {
       toast.success('Información cargada correctamente', { id: toastId });
 
       // Validar que los datos estén completos
-      if (!data.firstname || !data.lastname || !data.email) {
+      if (!data.firstname || !data.lastname || !data.phone) {
         toast.warning('Algunos datos del asistente están incompletos', { 
           id: 'incomplete-data-warning',
           duration: 3000 
@@ -263,7 +264,7 @@ export default function ComitePage() {
       // Recargar el asistente actualizado desde la base de datos
       let { data, error } = await supabase
         .from('attendees')
-        .select('id, firstname, lastname, email, church, sector, paymentamount, paymentstatus, created_at, attendance_number, attendance_confirmed, attendance_confirmed_at, tshirtsize')
+        .select('id, firstname, lastname, email, phone, church, sector, paymentamount, paymentstatus, created_at, attendance_number, attendance_confirmed, attendance_confirmed_at, tshirtsize')
         .eq('id', id)
         .single();
 
