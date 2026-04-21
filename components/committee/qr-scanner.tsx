@@ -145,7 +145,6 @@ function QrScanner({ onScan }: QrScannerProps) {
         )}
       </div>
 
-      <div id={qrScannerId} className="mt-4 rounded-md overflow-hidden border border-gray-300" />
 
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         {isIPhone ? (

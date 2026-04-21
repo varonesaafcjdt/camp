@@ -37,6 +37,7 @@ interface AttendeeData {
   attendance_number: number;
   attendance_confirmed: boolean;
   attendance_confirmed_at: string;
+  tshirtsize?: string;
 }
 
 export default function ComitePage() {
@@ -148,61 +149,69 @@ export default function ComitePage() {
   // Función optimizada para extraer el ID del asistente
   const extractAttendeeId = (qrData: string): string | null => {
     try {
-      // Limpiar el texto
+      if (!qrData) return null;
+      
       const cleanQrData = qrData.trim();
+      console.log('Procesando datos QR:', cleanQrData);
       
-      // Caso 1: Tratar como JSON
-      if (cleanQrData.startsWith('{') && cleanQrData.endsWith('}')) {
+      // Caso 0: Formato directo id:UUID (formato actual de la app)
+      if (cleanQrData.startsWith('id:')) {
+        const id = cleanQrData.substring(3).trim();
+        if (id) return id;
+      }
+
+      // Caso 1: Si es una URL, intentar extraer el parámetro 'id'
+      if (cleanQrData.startsWith('http')) {
         try {
-          const parsedData = JSON.parse(cleanQrData);
-          if (parsedData?.id) return parsedData.id;
-          if (parsedData?.ID) return parsedData.ID;
-          if (parsedData?.Id) return parsedData.Id;
+          const url = new URL(cleanQrData);
+          const idParam = url.searchParams.get('id');
+          if (idParam) return idParam;
+          
+          // Si no hay parámetro id, buscar un UUID en la ruta
+          const pathSegments = url.pathname.split('/');
+          const uuidInPath = pathSegments.find(segment => 
+            /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(segment)
+          );
+          if (uuidInPath) return uuidInPath;
+        } catch (e) {
+          // No es una URL válida, continuar
+        }
+      }
+      
+      // Caso 2: Tratar como JSON
+      if (cleanQrData.includes('{') && cleanQrData.includes('}')) {
+        try {
+          // Intentar limpiar JSON si tiene texto antes o después
+          const start = cleanQrData.indexOf('{');
+          const end = cleanQrData.lastIndexOf('}');
+          const jsonContent = cleanQrData.substring(start, end + 1);
+          
+          const parsedData = JSON.parse(jsonContent);
+          const id = parsedData?.id || parsedData?.ID || parsedData?.Id || parsedData?.attendeeId;
+          if (id) return String(id);
         } catch (jsonError) {
-          // JSON malformado, continuar con otros métodos
+          // JSON malformado, continuar con regex
         }
       }
       
-      // Caso 2: JSON malformado - buscar ID con regex
-      if (cleanQrData.startsWith('{')) {
-        const idMatch = cleanQrData.match(/"id"\s*:\s*"([^"]+)"/);
-        if (idMatch && idMatch[1]) return idMatch[1];
-        
-        // Intentar con diferentes variaciones del campo ID
-        const variations = [
-          /"ID"\s*:\s*"([^"]+)"/,
-          /"Id"\s*:\s*"([^"]+)"/,
-          /"attendee_id"\s*:\s*"([^"]+)"/,
-          /"attendeeId"\s*:\s*"([^"]+)"/
-        ];
-        
-        for (const pattern of variations) {
-          const match = cleanQrData.match(pattern);
-          if (match && match[1]) return match[1];
-        }
-      }
-      
-      // Caso 3: UUID directo
+      // Caso 3: Buscar UUID con guiones
       const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
       const matches = cleanQrData.match(uuidRegex);
       if (matches && matches[0]) return matches[0];
       
-      // Caso 4: Buscar cualquier patrón que parezca un ID
-      const generalIdPatterns = [
-        /[0-9a-f]{32}/i, // 32 caracteres hexadecimales
-        /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i, // UUID con guiones
-        /[0-9a-f]{8}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{4}[0-9a-f]{12}/i, // UUID sin guiones
-      ];
+      // Caso 4: Buscar UUID sin guiones (32 caracteres hex)
+      const plainUuidRegex = /[0-9a-f]{32}/i;
+      const plainMatches = cleanQrData.match(plainUuidRegex);
+      if (plainMatches && plainMatches[0]) return plainMatches[0];
       
-      for (const pattern of generalIdPatterns) {
-        const match = cleanQrData.match(pattern);
-        if (match && match[0]) return match[0];
-      }
-      
-      // Caso 5: Texto simple (si no es muy largo y parece un ID)
-      if (cleanQrData.length > 0 && cleanQrData.length < 50) {
-        // Verificar que no contenga caracteres problemáticos
-        if (!cleanQrData.includes(' ') && !cleanQrData.includes('\n') && !cleanQrData.includes('\t')) {
+      // Caso 5: Texto simple (si es corto y no tiene espacios, podría ser el ID directo)
+      if (cleanQrData.length > 0 && cleanQrData.length < 60) {
+        if (!cleanQrData.includes(' ') && !cleanQrData.includes('\n')) {
+          // Si llegamos aquí y empieza con 'id:', ya lo manejamos en el Caso 0,
+          // pero por si acaso hay variaciones como 'ID:' o 'Id:'
+          if (cleanQrData.toLowerCase().startsWith('id:')) {
+            return cleanQrData.substring(3).trim();
+          }
           return cleanQrData;
         }
       }
