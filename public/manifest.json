@@ -1,0 +1,22 @@
+{
+  "name": "Varones AAFCJ Registro 2K26",
+  "short_name": "Varones AAFCJ",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#FF0000",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
