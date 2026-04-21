@@ -46,7 +46,7 @@ export default function RegistroPage() {
     console.log('RegistroPage - handleSuccessfulSubmission recibió:');
     console.log('- data:', data);
     console.log('- qrCode:', qrCode);
-    
+
     // Usar directamente el qrCode si existe
     if (qrCode) {
       console.log('RegistroPage - Usando qrCode recibido directo del formulario');
@@ -66,7 +66,7 @@ export default function RegistroPage() {
       };
       setQrData(JSON.stringify(fallbackQrData));
     }
-    
+
     setIsSubmitted(true);
     window.scrollTo(0, 0);
   };
@@ -75,7 +75,7 @@ export default function RegistroPage() {
     <div className="min-h-screen flex flex-col bg-grainy">
       <div className="absolute inset-0 bg-wavy opacity-10 pointer-events-none z-0" />
       <Navbar showInternalLinks={false} />
-      
+
       <div className="flex-1 py-12 relative z-10">
         {registroCerrado ? (
           <div className="flex flex-1 min-h-[60vh] items-center justify-center">
@@ -94,12 +94,12 @@ export default function RegistroPage() {
         ) : (
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {isSubmitted ? (
-              <SuccessMessage 
-                qrData={qrData} 
+              <SuccessMessage
+                qrData={qrData}
                 onReset={() => {
                   setIsSubmitted(false);
                   setQrData(null);
-                }} 
+                }}
               />
             ) : (
               <>
@@ -110,7 +110,7 @@ export default function RegistroPage() {
                   </h1>
                   <h2 className="text-metallic text-2xl md:text-4xl mt-2">GENERACIÓN A GENERACIÓN</h2>
                   <p className="text-lg font-bold uppercase tracking-widest mt-4 opacity-70">
-                    Precampamento Distrital de Varones 2026
+                    Campamento Distrital de Varones 2026
                   </p>
                   <div className="inline-flex items-center gap-3 mt-4 border-2 border-black px-6 py-2 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <span className="text-sm font-black uppercase tracking-widest">📅 Campamento:</span>
@@ -125,7 +125,7 @@ export default function RegistroPage() {
           </div>
         )}
       </div>
-      
+
       <FooterL />
     </div>
   );
