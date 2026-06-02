@@ -383,7 +383,7 @@ export default function AttendeesTable() {
                   <div>Iglesia: {attendee.church}</div>
                   <div>Sector: {attendee.sector}</div>
                   <div>Monto: ${attendee.paymentamount}</div>
-                  <div>Debe: <span className="font-bold text-red-600">${900 - (attendee.paymentamount || 0)}</span></div>
+                  <div>Debe: <span className="font-bold text-red-600">${(attendee.expectedamount || 650) - (attendee.paymentamount || 0)}</span></div>
                   <div>Estado: {getPaymentBadge(attendee.paymentstatus)}</div>
                   <div>Talla: <Badge variant="outline" className={attendee.tshirtsize ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300" : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"}>{attendee.tshirtsize ? attendee.tshirtsize : 'N/A'}</Badge></div>
                   <div className="flex space-x-2 mt-2 justify-end">
@@ -545,7 +545,7 @@ export default function AttendeesTable() {
                     <TableCell className="text-center w-20 px-1">{attendee.sector}</TableCell>
                     <TableCell className="text-center w-16 px-1">${attendee.paymentamount}</TableCell>
                     <TableCell className="text-center w-16 px-1">
-                      ${900 - (attendee.paymentamount || 0)}
+                      ${(attendee.expectedamount || 650) - (attendee.paymentamount || 0)}
                     </TableCell>
                     <TableCell className="text-center w-20 px-1">{getPaymentBadge(attendee.paymentstatus)}</TableCell>
                     {/* <TableCell className="text-center w-20 px-1">

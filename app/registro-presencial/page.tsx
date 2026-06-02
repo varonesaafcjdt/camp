@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { getNextAttendanceNumber } from '@/lib/utils';
 
 const ROLES = [
-  { label: 'Campista', value: 'campista', monto: 900 },
+  { label: 'Campista', value: 'campista', monto: 650 },
   { label: 'Pastor', value: 'pastor', monto: 0 },
   { label: 'Esposa de Pastor', value: 'esposa', monto: 600 },
   { label: 'Ujier', value: 'ujier', monto: 700 },
@@ -125,7 +125,7 @@ export default function RegistroPresencial() {
     }
     if (name === 'rol') {
       const rolSeleccionado = ROLES.find(r => r.value === value);
-      setMonto(rolSeleccionado ? rolSeleccionado.monto : 900);
+      setMonto(rolSeleccionado ? rolSeleccionado.monto : 650);
     }
   };
 
