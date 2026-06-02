@@ -14,6 +14,7 @@ export const CHURCHES_DATA = [
   { sector: 1, name: "Tabernáculo de Adoración Familiar" },
   { sector: 1, name: "Cristo Centro de la Familia" },
   { sector: 1, name: "Iglesia Principe de Paz" },
+  { sector: 1, name: "El Faro" },
   { sector: 2, name: "La Nueva Jerusalén" },
   { sector: 2, name: "Comunidad Cristiana" },
   { sector: 2, name: "Iglesia Nueva Esperanza Tijuana" },
