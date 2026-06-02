@@ -11,12 +11,12 @@ import { getNextAttendanceNumber } from '@/lib/utils';
 
 const ROLES = [
   { label: 'Campista', value: 'campista', monto: 650 },
-  { label: 'Pastor', value: 'pastor', monto: 0 },
-  { label: 'Esposa de Pastor', value: 'esposa', monto: 600 },
-  { label: 'Ujier', value: 'ujier', monto: 700 },
-  { label: 'Multimedia', value: 'multimedia', monto: 700 },
-  { label: 'Registro', value: 'registro', monto: 700 },
-  { label: 'Comite', value: 'comite', monto: 0 },
+  { label: 'Pastor', value: 'pastor', monto: 650 },
+  { label: 'Esposa de Pastor', value: 'esposa', monto: 650 },
+  { label: 'Ujier', value: 'ujier', monto: 650 },
+  { label: 'Multimedia', value: 'multimedia', monto: 650 },
+  { label: 'Registro', value: 'registro', monto: 650 },
+  { label: 'Comite', value: 'comite', monto: 650 },
 ];
 
 export default function RegistroPresencial() {
@@ -198,10 +198,10 @@ export default function RegistroPresencial() {
   return (
     <div className="min-h-screen flex flex-col bg-try">
       <Navbar showInternalLinks={true} />
-      
+
       <div className="flex-1 py-12 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="text-center mb-10">
             <h1 className="text-stencil text-3xl md:text-5xl text-pure-black inline-block relative">
               WALK-IN
@@ -298,29 +298,29 @@ export default function RegistroPresencial() {
 
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Notas adicionales</label>
-                <textarea 
-                  name="notas" 
-                  value={form.notas} 
-                  onChange={handleChange} 
-                  className={inputClass + " border-slate-200 focus:border-red-600 focus:ring-red-600/10 h-20 resize-none"} 
-                  tabIndex={9} 
+                <textarea
+                  name="notas"
+                  value={form.notas}
+                  onChange={handleChange}
+                  className={inputClass + " border-slate-200 focus:border-red-600 focus:ring-red-600/10 h-20 resize-none"}
+                  tabIndex={9}
                 />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <button 
-                  type="submit" 
-                  className="flex-1 bg-primary text-white hover:bg-primary/95 px-6 py-3 rounded font-black uppercase text-sm tracking-widest transition-all shadow-md active:scale-[0.98]" 
-                  disabled={isSubmitting} 
+                <button
+                  type="submit"
+                  className="flex-1 bg-primary text-white hover:bg-primary/95 px-6 py-3 rounded font-black uppercase text-sm tracking-widest transition-all shadow-md active:scale-[0.98]"
+                  disabled={isSubmitting}
                   tabIndex={10}
                 >
                   {isSubmitting ? 'Registrando...' : 'Finalizar Registro'}
                 </button>
-                <button 
-                  type="button" 
-                  className="px-6 py-3 border border-slate-200 text-slate-600 hover:bg-slate-50 rounded font-bold uppercase text-sm tracking-widest transition-colors" 
-                  onClick={limpiarFormulario} 
-                  disabled={isSubmitting} 
+                <button
+                  type="button"
+                  className="px-6 py-3 border border-slate-200 text-slate-600 hover:bg-slate-50 rounded font-bold uppercase text-sm tracking-widest transition-colors"
+                  onClick={limpiarFormulario}
+                  disabled={isSubmitting}
                   tabIndex={11}
                 >
                   Limpiar
@@ -331,16 +331,16 @@ export default function RegistroPresencial() {
             {numeroCampista && (
               <div className="mt-8 p-6 bg-green-50 border border-green-100 rounded-lg text-center animate-fade-in shadow-inner">
                 <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                   </svg>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
                 <h3 className="text-green-800 font-bold text-lg mb-1">¡Registro Completado!</h3>
                 <p className="text-green-700 text-sm mb-4">Número de campista asignado:</p>
                 <div className="text-4xl font-black text-green-800 mb-6 font-mono tracking-tighter">
                   #{numeroCampista.toString().padStart(3, '0')}
                 </div>
-                
+
                 <div className="flex flex-col gap-3">
                   <button
                     className="w-full bg-green-600 text-white hover:bg-green-700 px-6 py-3 rounded font-bold uppercase text-sm tracking-widest transition-all shadow-sm"
